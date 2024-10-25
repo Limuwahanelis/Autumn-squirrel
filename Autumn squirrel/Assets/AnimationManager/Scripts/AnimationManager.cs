@@ -23,6 +23,11 @@ public class AnimationManager : MonoBehaviour
     private List<AnimState> _states = new List<AnimState>();
     public AnimationDurationList animList;
 
+    private void Reset()
+    {
+        Animator anim = GetComponent<Animator>();
+        if(anim != null) _anim = anim;
+    }
 #if UNITY_EDITOR
     private AnimatorController animatorController;
     private void Awake()

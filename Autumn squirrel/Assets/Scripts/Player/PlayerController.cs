@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerMovement _playerMovement;
     [SerializeField] PlayerChecks _playerChecks;
     //[SerializeField] PlayerCollisions _playerCollisions;
-    [SerializeField] PlayerHealthSystem _playerHealthSystem;
     [SerializeField] GameObject _gameOverPanel;
     private PlayerState _currentPlayerState;
     private PlayerContext _context;
@@ -27,7 +25,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
        // _playerHealthSystem.OnPushed += PushPlayer;
-        _playerHealthSystem.OnDeath += PlayerDeath;
         List<Type> states = AppDomain.CurrentDomain.GetAssemblies().SelectMany(domainAssembly => domainAssembly.GetTypes())
             .Where(type => typeof(PlayerState).IsAssignableFrom(type) && !type.IsAbstract).ToArray().ToList();
 
@@ -48,9 +45,9 @@ public class PlayerController : MonoBehaviour
         {
             playerStates.Add(state, (PlayerState)Activator.CreateInstance(state, getState));
         }
-        //PlayerState newState = GetState(typeof(PlayerIdleState));
-        //newState.SetUpState(_context);
-        //_currentPlayerState = newState;
+        PlayerState newState = GetState(typeof(PlayerIdleState));
+        newState.SetUpState(_context);
+        _currentPlayerState = newState;
     }
 
     public PlayerState GetState(Type state)
@@ -70,14 +67,6 @@ public class PlayerController : MonoBehaviour
         if (_printState) Logger.Log(newState.GetType());
         _currentPlayerState.InterruptState();
         _currentPlayerState = newState;
-    }
-    private void PlayerDeath(IDamagable damagable)
-    {
-        //_playerMovement.SetRBMaterial(PlayerMovement.PhysicMaterialType.NONE);
-        //PlayerState newState = GetState(typeof(PlayerDeadState));
-        //ChangeState(newState);
-        //newState.SetUpState(_context); ;
-        //_gameOverPanel.SetActive(true);
     }
     //public void PushPlayer(PushInfo psuhInfo)
     //{
@@ -99,13 +88,12 @@ public class PlayerController : MonoBehaviour
     }
     public IEnumerator WaitFrame(Action function)
     {
-        yield return new WaitForNextFrameUnit();
+        yield return null;
         function();
     }
 
     private void OnDestroy()
     {
-        _playerHealthSystem.OnDeath -= PlayerDeath;
         //_playerHealthSystem.OnPushed -= PushPlayer;
     }
 }

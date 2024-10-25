@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerContext : MonoBehaviour
+public class PlayerContext
 {
     public Action<PlayerState> ChangePlayerState;
     public Func<float, Action, Coroutine> WaitAndPerformFunction;
@@ -12,6 +12,7 @@ public class PlayerContext : MonoBehaviour
     public AnimationManager animationManager;
     public PlayerMovement playerMovement;
     public PlayerChecks checks;
+    public Vector2 firstMove;
    // public PlayerCollisions collisions;
     public bool canPerformAirCombo;
 }
