@@ -231,7 +231,7 @@ Transform:
   m_GameObject: {fileID: 81041860}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9470699, y: 1.7615501, z: 0}
+  m_LocalPosition: {x: 1.6652197, y: 1.1077201, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -391,7 +391,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -959,7 +959,7 @@ MonoBehaviour:
   _player: {fileID: 225152291}
   _feet: {fileID: 737713271}
   _jumpHandle: {fileID: 1880329017}
-  _jumpStrength: 12
+  _jumpStrength: 25
 --- !u!114 &990231687
 MonoBehaviour:
   m_ObjectHideFlags: 0

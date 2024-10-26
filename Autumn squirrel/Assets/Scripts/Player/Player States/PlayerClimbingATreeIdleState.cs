@@ -13,6 +13,7 @@ public class PlayerClimbingATreeIdleState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
+        _context.animationManager.PlayAnimation("Climb idle");
     }
 
     public override void Update()
