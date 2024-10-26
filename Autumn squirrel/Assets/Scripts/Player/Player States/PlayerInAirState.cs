@@ -38,6 +38,7 @@ public class PlayerInAirState : PlayerState
             //    _stateTypeToChangeFromInputCommand = null;
             //}
             //else 
+            _context.playerMovement.StopPlayer();
             ChangeState(PlayerIdleState.StateType);
             return;
         }

@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public int FlipSide => _flipSide;
     public bool IsPlayerFalling { get => _rb.velocity.y < 0; }
     public Rigidbody2D PlayerRB => _rb;
+    [SerializeField] float _normalGravityForce;
+    [SerializeField] float _treeJumpOffset;
     [SerializeField] PlayerChecks _playerChecks;
     [SerializeField] float _speed;
     [SerializeField] Rigidbody2D _rb;
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _mainBody.up = _playerChecks.IsInFrontOfGround.normal;
             _player.transform.position = _playerChecks.IsInFrontOfGround.point;
-            _rb.gravityScale = 2;
+            _rb.gravityScale = _normalGravityForce;
             return true;
         }
         return false;
@@ -122,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _mainBody.up = _playerChecks.IsOnToOfATree.normal;
             _player.transform.position = _playerChecks.IsOnToOfATree.point;
-            _rb.gravityScale = 2;
+            _rb.gravityScale = _normalGravityForce;
             return true;
         }
         return false;
@@ -130,8 +132,26 @@ public class PlayerMovement : MonoBehaviour
     public void Jump()
     {
         _rb.velocity = new Vector3(0, 0, 0);
-        
-        _rb.AddForce(_jumpHandle.GetVector()*_jumpStrength, ForceMode2D.Impulse);
+        _rb.AddForce(_jumpHandle.GetVector() * _jumpStrength, ForceMode2D.Impulse);
+    }
+    public void JumpFromATree()
+    {
+        _rb.velocity = new Vector3(0, 0, 0);
+        //climbs up a tree
+        if(_mainBody.up.x<0)
+        {
+            _mainBody.up = Vector3.up;
+            _mainBody.localScale = new Vector3(-1, _mainBody.localScale.y, _mainBody.localScale.z);
+           
+        }
+        else
+        {
+            _mainBody.up = Vector3.up;
+            _mainBody.localScale = new Vector3(1, _mainBody.localScale.y, _mainBody.localScale.z);
+        }
+        _player.transform.position = new Vector3(_player.transform.position.x + _treeJumpOffset * _mainBody.localScale.x, _player.transform.position.y, _player.transform.position.z);
+        _rb.gravityScale = _normalGravityForce;
+        _rb.AddForce(Vector3.right*_mainBody.localScale.x*(_jumpStrength/2), ForceMode2D.Impulse);
     }
     public void StopPlayer(bool vertical = true, bool horizontal = true)
     {

@@ -26,6 +26,11 @@ public class PlayerClimbingATreeIdleState : PlayerState
         if (direction == Vector2.zero) return;
         ChangeState(PlayerClimbingATreeState.StateType);
     }
+    public override void Jump()
+    {
+        base.Jump();
+        ChangeState(PlayerJumpingDromTreeState.StateType);
+    }
     public override void InterruptState()
     {
      
