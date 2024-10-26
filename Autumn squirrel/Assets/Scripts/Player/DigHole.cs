@@ -8,6 +8,7 @@ public class DigHole : MonoBehaviour
     [SerializeField] Transform _holePos;
     [SerializeField] GameObject _hole;
     [SerializeField] PlayerChecks _playerChecks;
+    [SerializeField] HoleManager _holeManager;
     private bool _isHoleBuilt;
     private bool _isCheckingHole = false;
     private bool _canPreviewHole = true;
@@ -42,6 +43,7 @@ public class DigHole : MonoBehaviour
         if (!_isCheckingHole) return;
         _isHoleBuilt = true;
         Color color =_hole.GetComponent<SpriteRenderer>().color;
+        _holeManager.enabled = true;
         _hole.GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, 1);
     }
 }
