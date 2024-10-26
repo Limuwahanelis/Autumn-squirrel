@@ -12,26 +12,30 @@ public class PlayerMovement : MonoBehaviour
         RIGHT = 1
     }
     public int FlipSide => _flipSide;
+    public bool IsPlayerFalling { get => _rb.velocity.y < 0; }
+    public Rigidbody2D PlayerRB => _rb;
     [SerializeField] PlayerChecks _playerChecks;
     [SerializeField] float _speed;
     [SerializeField] Rigidbody2D _rb;
     [SerializeField] Transform _mainBody;
     [SerializeField] PlayerController _player;
     [SerializeField] Transform _feet;
-    
-    private int _flipSide = 1; 
+    [SerializeField] Ringhandle _jumpHandle;
+    [SerializeField] float _jumpStrength;
+
+    private int _flipSide = 1;
     private playerDirection _newPlayerDirection;
     private playerDirection _oldPlayerDirection;
     private float _previousDirection;
     public void Move(Vector2 direction)
     {
-       // _rb.velocity = new Vector2(_speed*direction.x, 0f);
+        // _rb.velocity = new Vector2(_speed*direction.x, 0f);
 
         if (direction.x != 0)
         {
             _oldPlayerDirection = _newPlayerDirection;
             _newPlayerDirection = (playerDirection)direction.x;
-            _rb.MovePosition(_rb.position + new Vector2(_mainBody.right.x * _flipSide * _speed*Time.deltaTime, 0));
+            _rb.MovePosition(_rb.position + new Vector2(_mainBody.right.x * _flipSide * _speed * Time.deltaTime, 0));
             //_rb.velocity = ;
             if (direction.x > 0)
             {
@@ -53,9 +57,9 @@ public class PlayerMovement : MonoBehaviour
                 _rb.MovePosition(_rb.position + new Vector2(_mainBody.right.x * _flipSide * _speed * Time.deltaTime, 0));
                 //StopPlayerOnXAxis();
             }
-        
+
         }
-       
+
     }
     public void Climb(Vector2 direction)
     {
@@ -65,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _oldPlayerDirection = _newPlayerDirection;
             _newPlayerDirection = (playerDirection)direction.x;
-            _rb.MovePosition(_rb.position + new Vector2(0,_mainBody.right.y * _flipSide * _speed * Time.deltaTime ));
+            _rb.MovePosition(_rb.position + new Vector2(0, _mainBody.right.y * _flipSide * _speed * Time.deltaTime));
             //_rb.velocity = ;
             if (direction.x > 0)
             {
@@ -84,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             if (_previousDirection != 0)
             {
                 _rb.velocity = new Vector2(0, 0);
-                _rb.MovePosition(_rb.position + new Vector2(0,_mainBody.right.x * _flipSide * _speed * Time.deltaTime));
+                _rb.MovePosition(_rb.position + new Vector2(0, _mainBody.right.x * _flipSide * _speed * Time.deltaTime));
                 //StopPlayerOnXAxis();
             }
 
@@ -92,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool TrySnapToATree()
     {
-        if(_playerChecks.IsInFrontOfATree)
+        if (_playerChecks.IsInFrontOfATree)
         {
             _mainBody.up = _playerChecks.IsInFrontOfATree.normal;
             _player.transform.position = _playerChecks.IsInFrontOfATree.point;
@@ -107,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _mainBody.up = _playerChecks.IsInFrontOfGround.normal;
             _player.transform.position = _playerChecks.IsInFrontOfGround.point;
-            _rb.gravityScale = 1;
+            _rb.gravityScale = 2;
             return true;
         }
         return false;
@@ -118,9 +122,20 @@ public class PlayerMovement : MonoBehaviour
         {
             _mainBody.up = _playerChecks.IsOnToOfATree.normal;
             _player.transform.position = _playerChecks.IsOnToOfATree.point;
-            _rb.gravityScale = 1;
+            _rb.gravityScale = 2;
             return true;
         }
         return false;
+    }
+    public void Jump()
+    {
+        _rb.velocity = new Vector3(0, 0, 0);
+        
+        _rb.AddForce(_jumpHandle.GetVector()*_jumpStrength, ForceMode2D.Impulse);
+    }
+    public void StopPlayer(bool vertical = true, bool horizontal = true)
+    {
+        if (horizontal) _rb.velocity = new Vector2(0, _rb.velocity.y);
+        if (vertical) _rb.velocity = new Vector2(_rb.velocity.x, 0);
     }
 }

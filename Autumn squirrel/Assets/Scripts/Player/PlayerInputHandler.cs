@@ -66,4 +66,8 @@ public class PlayerInputHandler : MonoBehaviour
         _player.CurrentPlayerState.DigHole();
 
     }
+    void OnJump()
+    {
+        _player.CurrentPlayerState.Jump();
+    }
 }

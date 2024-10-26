@@ -33,4 +33,12 @@ MonoBehaviour:
     duration: 1.0166667
     speed: 1
     layer: 0
+  - name: Jump
+    duration: 0.1
+    speed: 1
+    layer: 0
+  - name: Fall
+    duration: 0.016666668
+    speed: 1
+    layer: 0
   animatorController: {fileID: 9100000, guid: 178c41d20c1f93e49bc1a4a2720e2259, type: 2}

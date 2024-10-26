@@ -60,6 +60,11 @@ public class PlayerIdleState : PlayerState
         base.DigHole();
         ChangeState(PlayerDiggingAHoleState.StateType);
     }
+    public override void Jump()
+    {
+        base.Jump();
+        ChangeState(PlayerJumpingState.StateType);
+    }
     public override void InterruptState()
     {
         if (_cor!=null) _context.coroutineHolder.StopCoroutine(_cor);

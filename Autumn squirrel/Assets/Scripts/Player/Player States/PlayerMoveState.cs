@@ -54,6 +54,11 @@ public class PlayerMoveState : PlayerState
         base.DigHole();
         ChangeState(PlayerDiggingAHoleState.StateType);
     }
+    public override void Jump()
+    {
+        base.Jump();
+        ChangeState(PlayerJumpingState.StateType);
+    }
     public override void Move(Vector2 direction)
     {
         base.Move(direction);
