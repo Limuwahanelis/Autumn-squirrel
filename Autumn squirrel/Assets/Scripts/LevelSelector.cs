@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class LevelSelector : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
+public class LevelSelector : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IPointerClickHandler
 {
     [SerializeField] int _levelindex;
+    [SerializeField] int _levelToLoadIndex;
     [SerializeField] RectTransform _rectTransform;
+    [SerializeField] TMP_Text _acornText;
     [SerializeField] Vector3 _bigScale;
     [SerializeField] float _textShowSpeed;
     [SerializeField] float _textFadeSpeed;
     Vector3 _scale;
     Vector3 _orignalScale;
-    private float _textAlpha;
     private float _time;
     private Coroutine _cor;
     public void OnPointerEnter(PointerEventData eventData)
@@ -27,11 +29,16 @@ public class LevelSelector : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
         Logger.Log("exit");
         StartHidetextCor();
     }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        SceneManager.LoadScene(_levelToLoadIndex);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         _orignalScale = _rectTransform.localScale;
+        _acornText.text = $"{GameStats.LevelDatas[_levelindex].collectedAcornsIndex.Count}/{GameStats.acornsInLevels[_levelindex]}";
     }
 
     // Update is called once per frame
@@ -77,4 +84,6 @@ public class LevelSelector : MonoBehaviour,IPointerEnterHandler,IPointerExitHand
             yield return null;
         }
     }
+
+
 }
