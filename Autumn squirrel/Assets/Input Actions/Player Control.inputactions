@@ -13,13 +13,31 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PreviewHole",
+                    "type": "Value",
+                    "id": "6867d6fc-fac1-426d-b58a-378a05c3e3e4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "BuildHole",
+                    "type": "Button",
+                    "id": "a34ffb42-09c9-4cd4-bb40-832423e85741",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "2D Vector",
                     "id": "123ed894-8bb2-4bba-97e9-23045fcaf5e0",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -70,6 +88,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9ac55af7-a6fe-4981-bd8e-a23a741cc016",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviewHole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7bd45187-1b24-4ca7-ae81-c9c6da6f8f11",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BuildHole",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

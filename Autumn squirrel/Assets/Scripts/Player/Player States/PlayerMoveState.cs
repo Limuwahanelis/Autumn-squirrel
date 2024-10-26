@@ -49,10 +49,14 @@ public class PlayerMoveState : PlayerState
         base.FixedUpdate();
         _context.playerMovement.Move(_direction);
     }
+    public override void DigHole()
+    {
+        base.DigHole();
+        ChangeState(PlayerDiggingAHoleState.StateType);
+    }
     public override void Move(Vector2 direction)
     {
         base.Move(direction);
-        if (_direction.x == 0) return;
         _direction = direction;
     }
     public override void InterruptState()

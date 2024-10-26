@@ -6,10 +6,7 @@ using UnityEngine;
 public class PlayerClimbingATreeState : PlayerState
 {
     public static Type StateType { get => typeof(PlayerClimbingATreeState); }
-    private float _moveAnimeLength;
     private Vector2 _direction;
-    private Vector2 _newDirection;
-    private float _time;
     public PlayerClimbingATreeState(GetState function) : base(function)
     {
     }
@@ -17,31 +14,28 @@ public class PlayerClimbingATreeState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
-        _context.animationManager.PlayAnimation("Move");
-        _moveAnimeLength = _context.animationManager.GetAnimationLength("Move");
+        _context.animationManager.PlayAnimation("Climb");
         _direction = _context.firstMove;
-        _time = 0;
     }
 
     public override void Update()
     {
         PerformInputCommand();
-        _time += Time.deltaTime;
-        if (_time > _moveAnimeLength)
-        {
-            if (_direction == Vector2.zero) { ChangeState(PlayerClimbingATreeIdleState.StateType); return; }
-            else
-            {
-                _time = 0;
-                //_direction = _newDirection;
-            }
-        }
         if (_context.checks.IsInFrontOfGround)
         {
             if (_context.playerMovement.TrySnapToGround())
             {
                 ChangeState(PlayerMoveState.StateType);
                 _context.firstMove = _direction;
+                return;
+            }
+        }
+        if(_context.checks.HasReachedtreeTop())
+        {
+            if(_context.playerMovement.TrySnapToTreeTop())
+            {
+                ChangeState(PlayerIdleState.StateType);
+                return;
             }
         }
     }
@@ -54,6 +48,7 @@ public class PlayerClimbingATreeState : PlayerState
     {
         base.Move(direction);
         _direction = direction;
+        if (_direction == Vector2.zero) ChangeState(PlayerClimbingATreeIdleState.StateType);
     }
     public override void InterruptState()
     {

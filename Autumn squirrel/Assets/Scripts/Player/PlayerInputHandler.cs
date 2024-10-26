@@ -9,7 +9,9 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] InputActionAsset _controls;
     [SerializeField] bool _useCommands;
     [SerializeField] PlayerInputStack _inputStack;
+    [SerializeField] DigHole _digHole;
     private Vector2 _direction;
+    private bool _showHole;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +29,17 @@ public class PlayerInputHandler : MonoBehaviour
                 _player.CurrentPlayerState.Move(_direction);
 
             }
+
+            if(_showHole)
+            {
+                _digHole.PreviewHole();
+            }
         }
     }
     private void OnMove(InputValue value)
     {
         _direction = value.Get<Vector2>();
+        Logger.Log("INpress: "+_direction);
 
     }
     void OnJump(InputValue value)
@@ -45,5 +53,17 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _direction = value.Get<Vector2>();
         Logger.Log(_direction);
+    }
+    void OnPreviewHole(InputValue value)
+    {
+        if (_digHole.IsHoleBuilt) return;
+        _showHole = value.Get<float>()>0?true:false;
+        if(!_showHole) _digHole.EndHolePreview();
+    }
+    void OnBuildHole(InputValue value)
+    {
+        if (_digHole.IsHoleBuilt) return;
+        _player.CurrentPlayerState.DigHole();
+
     }
 }

@@ -112,4 +112,15 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+    public bool TrySnapToTreeTop()
+    {
+        if (_playerChecks.IsOnToOfATree)
+        {
+            _mainBody.up = _playerChecks.IsOnToOfATree.normal;
+            _player.transform.position = _playerChecks.IsOnToOfATree.point;
+            _rb.gravityScale = 1;
+            return true;
+        }
+        return false;
+    }
 }

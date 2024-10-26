@@ -22,6 +22,7 @@ public class PlayerClimbingATreeIdleState : PlayerState
     public override void Move(Vector2 direction)
     {
         base.Move(direction);
+        if (direction == Vector2.zero) return;
         ChangeState(PlayerClimbingATreeState.StateType);
     }
     public override void InterruptState()

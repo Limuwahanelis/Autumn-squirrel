@@ -13,6 +13,7 @@ public class PlayerContext
     public PlayerMovement playerMovement;
     public PlayerChecks checks;
     public Vector2 firstMove;
+    public DigHole digHole;
    // public PlayerCollisions collisions;
     public bool canPerformAirCombo;
 }

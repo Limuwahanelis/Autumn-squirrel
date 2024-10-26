@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnimationManager _playerAnimationManager;
     [SerializeField] PlayerMovement _playerMovement;
     [SerializeField] PlayerChecks _playerChecks;
+    [SerializeField] DigHole _digHole;
     //[SerializeField] PlayerCollisions _playerCollisions;
     [SerializeField] GameObject _gameOverPanel;
     private PlayerState _currentPlayerState;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _context = new PlayerContext
         {
             ChangePlayerState = ChangeState,
+            digHole = _digHole,
             animationManager = _playerAnimationManager,
             playerMovement = _playerMovement,
             WaitAndPerformFunction = WaitAndExecuteFunction,

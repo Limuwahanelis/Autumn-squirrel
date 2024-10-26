@@ -55,6 +55,11 @@ public class PlayerIdleState : PlayerState
         _time= 0;
         _isRotatingHead= false;
     }
+    public override void DigHole()
+    {
+        base.DigHole();
+        ChangeState(PlayerDiggingAHoleState.StateType);
+    }
     public override void InterruptState()
     {
         if (_cor!=null) _context.coroutineHolder.StopCoroutine(_cor);
