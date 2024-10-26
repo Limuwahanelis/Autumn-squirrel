@@ -494,7 +494,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 6200000, guid: 89529fd6207874f478d4183a36fbdc2b, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -772,7 +772,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 9.375
+  orthographic size: 8.4375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1915,8 +1915,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbf9ebf1651e254c8421f4089e1c915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _normalGravityForce: 0
-  _treeJumpOffset: 0
+  _normalGravityForce: 2
+  _treeJumpOffset: 0.66
   _playerChecks: {fileID: 990231685}
   _speed: 6
   _rb: {fileID: 225152289}
