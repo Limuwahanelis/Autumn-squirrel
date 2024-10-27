@@ -27,14 +27,16 @@ public class PlayerClimbingATreeState : PlayerState
             {
                 ChangeState(PlayerMoveState.StateType);
                 _context.firstMove = _direction;
+                Logger.Log("Ground");
                 return;
             }
         }
-        if(_context.checks.HasReachedtreeTop())
+        else if(_context.checks.HasReachedtreeTop())
         {
             if(_context.playerMovement.TrySnapToTreeTop())
             {
                 ChangeState(PlayerIdleState.StateType);
+                Logger.Log("Ground from tre top");
                 return;
             }
         }

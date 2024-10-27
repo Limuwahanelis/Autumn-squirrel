@@ -100,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerChecks.IsInFrontOfATree)
         {
+            Logger.Log(_playerChecks.IsInFrontOfATree.normal);
             _mainBody.up = _playerChecks.IsInFrontOfATree.normal;
             _player.transform.position = _playerChecks.IsInFrontOfATree.point;
             _rb.gravityScale = 0;
@@ -111,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerChecks.IsInFrontOfGround)
         {
+            Logger.Log(_playerChecks.IsInFrontOfGround.normal);
             _mainBody.up = _playerChecks.IsInFrontOfGround.normal;
             _player.transform.position = _playerChecks.IsInFrontOfGround.point;
             _rb.gravityScale = _normalGravityForce;
@@ -122,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_playerChecks.IsOnToOfATree)
         {
+            Logger.Log(_playerChecks.IsOnToOfATree.normal);
             _mainBody.up = _playerChecks.IsOnToOfATree.normal;
             _player.transform.position = _playerChecks.IsOnToOfATree.point;
             _rb.gravityScale = _normalGravityForce;

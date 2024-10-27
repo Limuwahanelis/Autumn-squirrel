@@ -33,16 +33,17 @@ public class PlayerChecks : MonoBehaviour
     {
         _hit = Physics2D.Raycast(_groundRayCastOrigin.position, -_mainBody.up, _groundRayLength, _ground);
         _treeHit = Physics2D.Raycast(_treeRayCastOrigin.position, _mainBody.right*_mainBody.localScale.x, _treeRayLength, _tree);
-        _groundFromTreeHit= Physics2D.Raycast(_treeRayCastOrigin.position, _mainBody.right * _mainBody.localScale.x, _treeRayLength, _ground);
-
+        _groundFromTreeHit= Physics2D.Raycast(_treeRayCastOrigin.position, _mainBody.right * _mainBody.localScale.x, _treeRayLength*1.2f, _ground);
+        if (_groundFromTreeHit) Aa = true;
+        else Aa = false;
 
     }
     public bool HasReachedtreeTop()
     {
-        if (!_treeHit)
+        if (!_treeHit && !_groundFromTreeHit)
         {
             Vector2 org = _treeRayCastOrigin.position + _mainBody.right * _mainBody.localScale.x - _mainBody.up * _treeTopRayLength;
-            _treeTopHit = Physics2D.Raycast(org, -_mainBody.right, 1f, _tree);
+            _treeTopHit = Physics2D.Raycast(org, -_mainBody.right * _mainBody.localScale.x, 1f, _tree);
             if (_treeTopHit) 
             {
                 return true;
@@ -58,7 +59,7 @@ public class PlayerChecks : MonoBehaviour
         Gizmos.DrawRay(_treeRayCastOrigin.position, _mainBody.right * _treeRayLength * _mainBody.localScale.x);
         Gizmos.color = Color.red;
         Vector2 org = _treeRayCastOrigin.position + _mainBody.right * _mainBody.localScale.x - _mainBody.up * _treeTopRayLength;
-        Gizmos.DrawRay(org,-_mainBody.right);
+        Gizmos.DrawRay(org,-_mainBody.right*_mainBody.localScale.x);
         //if (_hit) Gizmos.DrawRay(_hit.point, _hit.normal * 2);
     }
 }

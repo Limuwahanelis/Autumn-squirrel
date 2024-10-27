@@ -37,7 +37,6 @@ public class PlayerIdleState : PlayerState
         else if(!_isRotatingHead)
         {
             _context.animationManager.PlayAnimation("Rotate head");
-            Logger.Log("Start cir");
             _cor = _context.WaitAndPerformFunction(_rotateHeadAnimTime, () => { _context.animationManager.PlayAnimation("Idle"); ResetTimer(); });
             _isRotatingHead = true;
         }
