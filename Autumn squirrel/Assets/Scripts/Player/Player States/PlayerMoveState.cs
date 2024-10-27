@@ -6,10 +6,12 @@ using UnityEngine;
 public class PlayerMoveState : PlayerState
 {
     public static Type StateType { get => typeof(PlayerMoveState); }
-    private float _moveAnimeLength;
+    private float _move1AnimeLength;
+    private float _move2AnimeLength;
     private Vector2 _direction;
     private Vector2 _newDirection;
     private float _time;
+    bool _isInFirstPart = true;
     public PlayerMoveState(GetState function) : base(function)
     {
     }
@@ -17,9 +19,11 @@ public class PlayerMoveState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
-        _context.animationManager.PlayAnimation("Move");
-        _moveAnimeLength = _context.animationManager.GetAnimationLength("Move");
+        _context.animationManager.PlayAnimation("Move single 1");
+        _move1AnimeLength = _context.animationManager.GetAnimationLength("Move single 1");
+        _move2AnimeLength = _context.animationManager.GetAnimationLength("Move single 2");
         _direction = _context.firstMove;
+        _isInFirstPart = true;
         _time = 0;
     }
 
@@ -27,13 +31,32 @@ public class PlayerMoveState : PlayerState
     {
         PerformInputCommand();
         _time += Time.deltaTime;
-        if(_time > _moveAnimeLength) 
+        if (_isInFirstPart)
         {
-            if (_direction == Vector2.zero) { ChangeState(PlayerIdleState.StateType); return; }
-            else
+            if (_time > _move1AnimeLength)
             {
-                _time = 0;
-                //_direction = _newDirection;
+                if (_direction == Vector2.zero) { ChangeState(PlayerIdleState.StateType); return; }
+                else
+                {
+                    _time = 0;
+                    _context.animationManager.PlayAnimation("Move single 2");
+                    _isInFirstPart= false;
+                    //_direction = _newDirection;
+                }
+            }
+        }
+        else
+        {
+            if (_time > _move2AnimeLength)
+            {
+                if (_direction == Vector2.zero) { ChangeState(PlayerIdleState.StateType); return; }
+                else
+                {
+                    _time = 0;
+                    _context.animationManager.PlayAnimation("Move single 1");
+                    _isInFirstPart = true;
+                    //_direction = _newDirection;
+                }
             }
         }
         if(_context.checks.IsInFrontOfATree && _direction.y>0)

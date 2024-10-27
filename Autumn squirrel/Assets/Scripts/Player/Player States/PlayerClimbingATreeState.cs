@@ -35,7 +35,7 @@ public class PlayerClimbingATreeState : PlayerState
         {
             if(_context.playerMovement.TrySnapToTreeTop())
             {
-                ChangeState(PlayerIdleState.StateType);
+                ChangeState(PlayerWalkingOnATreeTopState.StateType);
                 Logger.Log("Ground from tre top");
                 return;
             }
@@ -50,7 +50,7 @@ public class PlayerClimbingATreeState : PlayerState
     {
         base.Move(direction);
         _direction = direction;
-        if (_direction == Vector2.zero) ChangeState(PlayerClimbingATreeIdleState.StateType);
+        if (_direction.x == 0) ChangeState(PlayerClimbingATreeIdleState.StateType);
     }
     public override void InterruptState()
     {

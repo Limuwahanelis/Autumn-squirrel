@@ -29,6 +29,26 @@ public class PlayerMovement : MonoBehaviour
     private playerDirection _newPlayerDirection;
     private playerDirection _oldPlayerDirection;
     private float _previousDirection;
+    public void MoveInAir(Vector2 direction)
+    {
+        if (direction.x != 0)
+        {
+            _oldPlayerDirection = _newPlayerDirection;
+            _newPlayerDirection = (playerDirection)direction.x;
+            _rb.MovePosition(_rb.position + new Vector2(_mainBody.right.x * _flipSide * _speed * Time.deltaTime*0.6f ,_rb.position.y));
+            _previousDirection = direction.x;
+        }
+        else
+        {
+            if (_previousDirection != 0)
+            {
+                _rb.velocity = new Vector2(0, 0);
+                _rb.MovePosition(_rb.position + new Vector2(_mainBody.right.x * _flipSide * _speed * Time.deltaTime, 0));
+                //StopPlayerOnXAxis();
+            }
+
+        }
+    }
     public void Move(Vector2 direction)
     {
         // _rb.velocity = new Vector2(_speed*direction.x, 0f);
@@ -62,6 +82,10 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+    }
+    public void RestoreRBGravity()
+    {
+        _rb.gravityScale = _normalGravityForce;
     }
     public void Climb(Vector2 direction)
     {

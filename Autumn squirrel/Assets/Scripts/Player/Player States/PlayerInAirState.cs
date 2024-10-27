@@ -16,6 +16,7 @@ public class PlayerInAirState : PlayerState
     public override void SetUpState(PlayerContext context)
     {
         base.SetUpState(context);
+        _context.playerMovement.RestoreRBGravity();
     }
 
     public override void Update()
@@ -52,6 +53,11 @@ public class PlayerInAirState : PlayerState
                 return;
             }
         }
+    }
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+       // _context.playerMovement.MoveInAir(_direction);
     }
     public override void Move(Vector2 direction)
     {
